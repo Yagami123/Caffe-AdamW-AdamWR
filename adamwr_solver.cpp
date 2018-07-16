@@ -50,7 +50,7 @@ namespace caffe {
         const Dtype eps_hat = this->param_.delta();
 
         Dtype yita(1.);
-        bool with_restart = this->param_.with_restart;
+        bool with_restart = this->param_.with_restart();
 
         // false: AdamW, true: AdamWR
         if (with_restart) {
