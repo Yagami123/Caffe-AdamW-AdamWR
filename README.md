@@ -126,8 +126,14 @@ modify sgd_solvers.hpp as below:
 if you use lr_policy of step, you should take note hyperparameter of gamma, which may make loss value boomed if you use proposal value, 0.1. Perhaps, you can set gamma to 0.9 instead.
 
 #### 5. results
+![AdamWR_decay(10000)](https://raw.githubusercontent.com/Yagami123/Caffe-AdamW-AdamWR/master/image/AdamWR.png)
+![AdamWR_decay(3000)](https://raw.githubusercontent.com/Yagami123/Caffe-AdamW-AdamWR/master/image/AdamWR_cos_decay(3000).png)
+![Adam_step](https://raw.githubusercontent.com/Yagami123/Caffe-AdamW-AdamWR/master/image/Adam_wd(5e-4).png)
+![SGD_step](https://raw.githubusercontent.com/Yagami123/Caffe-AdamW-AdamWR/master/image/SGD_step_wd(5e-4).png)
 
-
+>conclusion: we can observe to find comparing to solvers of Adam and SGD, AdamWR gets faster speed of convergence.
+And addition to warm restart, AdamWR can skip out trap of local optimal value and get a better local optimal perhaps.
+So, AdamWR gets less possibility to overfitting rather than Adam and SGD.
 
 ## contact
 submitting issues or contacting with me (yagami.lin1120@gmail.com)
