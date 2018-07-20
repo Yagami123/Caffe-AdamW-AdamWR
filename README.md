@@ -1,4 +1,3 @@
-# Caffe-AdamW-AdamWR
 ---
 Implementation of AdamW and AdamWR Algorithms in caffe
 ---
@@ -10,6 +9,7 @@ Implementation of AdamW and AdamWR Algorithms in caffe
 id from 712 to ...
 
 #### 1. add parameters needed in message SolverParameter of caffe.proto.
+modify caffe.proto as below:
 ```
     // If true, adamw solver will restart per cosine decay scheduler
     optional bool with_restart = 712 [default = false];
@@ -21,6 +21,7 @@ id from 712 to ...
 
 ## add adamwr_solver.cpp
 ### 1. add parameters needed in message SolverParameter of caffe.proto.
+modify caffe.proto as below:
 ```
     enum SolverType {
         SGD = 0;
@@ -34,8 +35,9 @@ id from 712 to ...
 ```
 
 #### 2. add class definition in class sgd_solvers.hpp
+modify sgd_solvers.hpp as below:
 ```c++
-template<typename Dtype>
+    template<typename Dtype>
     class AdamWRSolver : public SGDSolver<Dtype> {
     public:
         explicit AdamWRSolver(const SolverParameter &param)
@@ -57,6 +59,10 @@ template<typename Dtype>
 ```
 
 #### 3. implement method ComputeUpdateValue mainly
+
+> add adamwr_solver.cpp and adamwr_solver.cu to src/caffe/solvers/. 
+> some differents between adam and adamwr showed below
+
 3.1 fixed weight decay regularization in Adam
 ```
     // yita: schedule multiplier, alpha: learning policy
@@ -112,14 +118,15 @@ template<typename Dtype>
 - weight_decay: 0.0005
 - with_restart: true (false will set yita = 1 fixedly)
 - cosine_decay_steps: 10000 (change it to observe results)
-- cosine_decay_mults: 2
+- cosine_decay_mult: 2
 - type: "AdamWR"
 
 4.3 others to take note
 
-if you use lr_policy of step, you should take note hyperparameter of power, which may make loss value boomed if you use proposal value, 0.1. Perhaps, you can set power to 0.9 instead.
+if you use lr_policy of step, you should take note hyperparameter of gamma, which may make loss value boomed if you use proposal value, 0.1. Perhaps, you can set gamma to 0.9 instead.
 
 #### 5. results
+
 
 
 ## contact
